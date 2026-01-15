@@ -63,7 +63,12 @@ const response = await axios.post(`${apiUrl}/api/submit`, form, {
   }
 });
 
+if (!response.ok) {
+  throw new Error(`Erreur serveur: ${response.status} ${response.statusText}`);
+}
 
+const data = await response.json();
+console.log('Data returned:', data);
       setSuccessMessage('✅ Formulaire envoyé avec succès!');
       setFormData({ name: '', email: '', message: '' });
       setImage(null);
