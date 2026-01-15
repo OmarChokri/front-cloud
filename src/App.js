@@ -14,8 +14,7 @@ function App() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/submissions');
-      const data = await response.json();
+const response = await fetch(`${process.env.REACT_APP_API_URL}/api/submissions`);      const data = await response.json();
       setSubmissions(data);
     } catch (error) {
       console.error('Error fetching data:', error);
