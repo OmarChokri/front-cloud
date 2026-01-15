@@ -42,10 +42,6 @@ function FormComponent({ onSubmit }) {
       return;
     }
 
-    if (!image) {
-      setErrorMessage('Veuillez sélectionner une image!');
-      return;
-    }
 
     setLoading(true);
     setErrorMessage('');
@@ -58,11 +54,15 @@ function FormComponent({ onSubmit }) {
       form.append('message', formData.message);
       form.append('image', image);
 
-      const response = await axios.post('http://localhost:5000/api/submit', form, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+    // Utilisation de la variable d'environnement pour l'URL de l'ALB
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
+const response = await axios.post(`${apiUrl}/api/submit`, form, {
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  }
+});
+
 
       setSuccessMessage('✅ Formulaire envoyé avec succès!');
       setFormData({ name: '', email: '', message: '' });
