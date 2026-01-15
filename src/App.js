@@ -14,9 +14,20 @@ function App() {
 
 const fetchData = async () => {
     try {
-      // 1. Appel API en utilisant la variable d'environnement
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/submissions`);
+     const apiUrl = process.env.REACT_APP_API_URL;
 
+const submitForm = async (form) => {
+  try {
+    const response = await axios.post(`${apiUrl}/api/submit`, form, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    console.log('Form submitted successfully', response.data);
+  } catch (error) {
+    console.error('Erreur lors de la soumission:', error);
+  }
+};
       // 2. Vérification du statut de la réponse (résout le warning 'unused response')
       if (!response.ok) {
         throw new Error(`Serveur Erreur: ${response.status} ${response.statusText}`);
